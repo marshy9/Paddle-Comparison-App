@@ -33,14 +33,12 @@ export default function Home({ products, featuredProducts }) {
         {featuredProducts.map((product) => (
           <div key={product._id}>
             <Link href={`/product/${product.slug}`} passHref className="flex">
-
               <img src={product.banner} alt={product.name} />
-
             </Link>
           </div>
         ))}
       </Carousel>
-      <h2 className="h2 my-4">Latest Products</h2>
+      <h2 className="h2 my-4">Latest Paddles</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (
           <ProductItem
