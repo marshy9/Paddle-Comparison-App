@@ -17,7 +17,7 @@ export default function PaddleItem({ paddle, addToCartHandler }) {
           <h2 className="text-lg">{paddle.name}</h2>
         </Link>
         <p className="mb-2">{paddle.brand}</p>
-        <p>${product.price}</p>
+        <p>${paddle.price}</p>
         <button
           className="primary-button"
           type="button"

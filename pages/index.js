@@ -4,13 +4,15 @@ import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 import ProductItem from '../components/ProductItem';
 import Product from '../models/Product';
+import Paddle from '../models/Paddle';
 import db from '../utils/db';
 import { Store } from '../utils/Store';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
+import PaddleItem from '../components/PaddleItem';
 
-export default function Home({ products, featuredProducts }) {
+export default function Home({ paddles, products, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
@@ -40,12 +42,12 @@ export default function Home({ products, featuredProducts }) {
       </Carousel>
       <h2 className="h2 my-4">Latest Paddles</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {products.map((product) => (
-          <ProductItem
-            product={product}
-            key={product.slug}
+        {paddles.map((paddle) => (
+          <PaddleItem
+            paddle={paddle}
+            key={paddle.slug}
             addToCartHandler={addToCartHandler}
-          ></ProductItem>
+          ></PaddleItem>
         ))}
       </div>
     </Layout>
@@ -56,10 +58,12 @@ export async function getServerSideProps() {
   await db.connect();
   const products = await Product.find().lean();
   const featuredProducts = await Product.find({ isFeatured: true }).lean();
+  const paddles = await Paddle.find().lean();
   return {
     props: {
       featuredProducts: featuredProducts.map(db.convertDocToObj),
       products: products.map(db.convertDocToObj),
+      paddles: paddles.map(db.convertDocToObj),
     },
   };
 }

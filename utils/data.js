@@ -96,6 +96,7 @@ const data = {
   paddles: [
     {
       name: 'Legacy Pro',
+      slug: 'legacy-pro',
       image: '/images/legacy.png',
       brand: 'Legacy Pickleball',
       price: 145,
@@ -112,6 +113,7 @@ const data = {
     },
     {
       name: 'GX6 Power Series ',
+      slug: 'gx6-power-series',
       image: '/images/gearbox6power.jpg',
       brand: 'Gearbox',
       price: 150,
@@ -128,6 +130,7 @@ const data = {
     },
     {
       name: 'CRBN 2X Power Series',
+      slug: 'crbn-2x-power-series',
       image: '/images/crbn2-power-14mm',
       brand: 'CRBN',
       price: 229.99,
@@ -144,6 +147,7 @@ const data = {
     },
     {
       name: 'Adipower Dummy1',
+      slug: 'adipower-dummy1',
       image: '/images/adidas-adipower-attk',
       brand: 'Adidas',
       price: 69.69,
@@ -159,6 +163,7 @@ const data = {
     },
     {
       name: 'Adipower Dummy2',
+      slug: 'adipower-dummy2',
       image: '/images/adidas-adipower-attk',
       brand: 'Adidas',
       price: 69.69,
@@ -174,6 +179,7 @@ const data = {
     },
     {
       name: 'Adipower Dummy3',
+      slug: 'adipower-dummy3',
       image: '/images/adidas-adipower-attk',
       brand: 'Adidas',
       price: 69.69,
@@ -189,6 +195,7 @@ const data = {
     },
     {
       name: 'Adipower Dummy4',
+      slug: 'adipower-dummy4',
       image: '/images/adidas-adipower-attk',
       brand: 'Adidas',
       price: 69.69,
