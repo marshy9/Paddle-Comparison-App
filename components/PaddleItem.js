@@ -21,7 +21,7 @@ export default function PaddleItem({ paddle, addToCartHandler }) {
         <button
           className="primary-button"
           type="button"
-          onClick={() => addToCartHandler(product)}
+          onClick={() => addToCartHandler(paddle)}
         >
           Add to cart
         </button>

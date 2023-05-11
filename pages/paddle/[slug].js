@@ -74,7 +74,7 @@ export default function PaddleScreen(props) {
   );
 }
 
-export async function  (context) {
+export async function getServerSideProps(context) {
   const { params } = context;
   const { slug } = params;
 
