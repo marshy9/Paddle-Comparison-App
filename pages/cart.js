@@ -15,9 +15,11 @@ function CartScreen() {
   const {
     cart: { cartItems },
   } = state;
+  //remove item from cart
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
+  //update cart items
   const updateCartHandler = async (item, qty) => {
     const quantity = Number(qty);
     const { data } = await axios.get(`/api/products/${item._id}`);
@@ -27,6 +29,7 @@ function CartScreen() {
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
     toast.success('Product updated in the cart');
   };
+  //render component
   return (
     <Layout title="Shopping Cart">
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
@@ -50,8 +53,10 @@ function CartScreen() {
                 {cartItems.map((item) => (
                   <tr key={item.slug} className="border-b">
                     <td>
-                      <Link href={`/product/${item.slug}`} className="flex items-center">
-
+                      <Link
+                        href={`/product/${item.slug}`}
+                        className="flex items-center"
+                      >
                         <Image
                           src={item.image}
                           alt={item.name}
@@ -59,7 +64,6 @@ function CartScreen() {
                           height={50}
                         ></Image>
                         {item.name}
-
                       </Link>
                     </td>
                     <td className="p-5 text-right">
