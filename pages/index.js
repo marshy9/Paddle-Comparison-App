@@ -12,20 +12,20 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
 import PaddleItem from '../components/PaddleItem';
 
-export default function Home({ paddles, products, featuredProducts }) {
+export default function Home({ paddles, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
-  const addToCartHandler = async (product) => {
-    const existItem = cart.cartItems.find((x) => x.slug === product.slug);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
-
-    if (data.countInStock < quantity) {
-      return toast.error('Sorry. Product is out of stock');
+  const addToCartHandler = async (paddle) => {
+    console.log(paddle);
+    console.log(cart.cartItems);
+    const existItem = cart.cartItems.find((x) => x.slug === paddle.slug);
+    console.log('exist:', existItem);
+    if (existItem) {
+      // If the paddle already exists in the cart
+      return toast.info('Product already exists in the cart');
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...paddle } });
     toast.success('Product added to the cart');
   };
 
@@ -56,13 +56,11 @@ export default function Home({ paddles, products, featuredProducts }) {
 
 export async function getServerSideProps() {
   await db.connect();
-  const products = await Product.find().lean();
   const featuredProducts = await Product.find({ isFeatured: true }).lean();
   const paddles = await Paddle.find().lean();
   return {
     props: {
       featuredProducts: featuredProducts.map(db.convertDocToObj),
-      products: products.map(db.convertDocToObj),
       paddles: paddles.map(db.convertDocToObj),
     },
   };

@@ -3,7 +3,7 @@ import db from '../../../utils/db';
 
 const handler = async (req, res) => {
   await db.connect();
-  const product = await Paddle.findById(req.query.id);
+  const paddle = await Paddle.findById(req.query.id);
   await db.disconnect();
   res.send(paddle);
 };

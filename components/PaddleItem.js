@@ -6,7 +6,7 @@ import { ArrowRightIcon, PlusCircleIcon } from '@heroicons/react/outline';
 export default function PaddleItem({ paddle, addToCartHandler }) {
   return (
     <div className="card">
-      <div class="relative">
+      <div className="relative">
         <Link href={`/paddle/${paddle.slug}`}>
           <img
             src={paddle.image}
@@ -38,7 +38,7 @@ export default function PaddleItem({ paddle, addToCartHandler }) {
         <button
           className="primary-button"
           type="button"
-          //onClick={() => addToCartHandler(paddle)}
+          onClick={() => addToCartHandler(paddle)}
         >
           Add to cart
         </button>
