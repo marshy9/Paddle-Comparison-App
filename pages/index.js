@@ -11,6 +11,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
 import PaddleItem from '../components/PaddleItem';
+import CartDropdown from '../components/CartDropdown';
 
 export default function Home({ paddles, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
@@ -31,6 +32,7 @@ export default function Home({ paddles, featuredProducts }) {
 
   return (
     <Layout title="Home Page">
+      <CartDropdown cartItems={cart.cartItems} />
       <Carousel showThumbs={false} autoPlay>
         {featuredProducts.map((product) => (
           <div key={product._id}>

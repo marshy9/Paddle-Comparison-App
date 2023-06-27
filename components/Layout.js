@@ -70,14 +70,7 @@ export default function Layout({ title, children }) {
                 <SearchIcon className="h-5 w-5"></SearchIcon>
               </button>
             </form>
-            <button
-              className="primary-button"
-              type="button"
-              onClick={() => addToCartHandler(paddle)}
-            >
-              Cart
-            </button>
-            <CartDropdown cartItems={cart.cartItems} />
+
             <div>
               <Link href="/cart" className="p-2">
                 Cart
