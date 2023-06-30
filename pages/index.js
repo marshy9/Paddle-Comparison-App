@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 import ProductItem from '../components/ProductItem';
@@ -16,6 +16,7 @@ import CartDropdown from '../components/CartDropdown';
 export default function Home({ paddles, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
+  const [cartOpen, setCartOpen] = useState(false);
 
   const addToCartHandler = async (paddle) => {
     console.log(paddle);
@@ -32,7 +33,11 @@ export default function Home({ paddles, featuredProducts }) {
 
   return (
     <Layout title="Home Page">
-      <CartDropdown cartItems={cart.cartItems} />
+      <CartDropdown
+        cartItems={cart.cartItems}
+        cartOpen={cartOpen}
+        setCartOpen={setCartOpen}
+      />
       <Carousel showThumbs={false} autoPlay>
         {featuredProducts.map((product) => (
           <div key={product._id}>
@@ -42,6 +47,9 @@ export default function Home({ paddles, featuredProducts }) {
           </div>
         ))}
       </Carousel>
+      <button type="button" onClick={() => setCartOpen(!cartOpen)}>
+        Open Cart
+      </button>
       <h2 className="h2 my-4">Latest Paddles</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {paddles.map((paddle) => (
