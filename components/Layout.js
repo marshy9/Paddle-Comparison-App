@@ -10,11 +10,11 @@ import { Store } from '../utils/Store';
 import DropdownLink from './DropdownLink';
 import { useRouter } from 'next/router';
 import { SearchIcon } from '@heroicons/react/outline';
-import CartDropdown from './CartDropdown';
+import CartDropdown from '../components/CartDropdown';
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
-
+  const [cartOpen, setCartOpen] = useState(false);
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
@@ -72,14 +72,22 @@ export default function Layout({ title, children }) {
             </form>
 
             <div>
-              <Link href="/cart" className="p-2">
+              {/* <Link href="/cart" className="p-2">
                 Cart
                 {cartItemsCount > 0 && (
                   <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
                     {cartItemsCount}
                   </span>
                 )}
-              </Link>
+              </Link> */}
+              <button type="button" onClick={() => setCartOpen(!cartOpen)}>
+                Open Cart
+              </button>
+              <CartDropdown
+                cartItems={cart.cartItems}
+                cartOpen={cartOpen}
+                setCartOpen={setCartOpen}
+              />
 
               {status === 'loading' ? (
                 'Loading'

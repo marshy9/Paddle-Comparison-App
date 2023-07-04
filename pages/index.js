@@ -11,12 +11,10 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
 import PaddleItem from '../components/PaddleItem';
-import CartDropdown from '../components/CartDropdown';
 
 export default function Home({ paddles, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  const [cartOpen, setCartOpen] = useState(false);
 
   const addToCartHandler = async (paddle) => {
     console.log(paddle);
@@ -33,11 +31,6 @@ export default function Home({ paddles, featuredProducts }) {
 
   return (
     <Layout title="Home Page">
-      <CartDropdown
-        cartItems={cart.cartItems}
-        cartOpen={cartOpen}
-        setCartOpen={setCartOpen}
-      />
       <Carousel showThumbs={false} autoPlay>
         {featuredProducts.map((product) => (
           <div key={product._id}>
@@ -47,9 +40,7 @@ export default function Home({ paddles, featuredProducts }) {
           </div>
         ))}
       </Carousel>
-      <button type="button" onClick={() => setCartOpen(!cartOpen)}>
-        Open Cart
-      </button>
+
       <h2 className="h2 my-4">Latest Paddles</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {paddles.map((paddle) => (

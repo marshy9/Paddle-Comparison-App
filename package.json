@@ -16,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.8.0",
     "cloudinary": "^1.30.0",
+    "framer-motion": "^10.12.18",
     "js-cookie": "^3.0.1",
     "mongoose": "^6.10.1",
     "next": "13.1.6",
