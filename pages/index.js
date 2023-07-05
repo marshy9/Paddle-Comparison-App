@@ -26,11 +26,11 @@ export default function Home({ paddles, featuredProducts }) {
       return toast.info('Product already exists in the cart');
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...paddle } });
-    toast.success('Product added to the cart', { toastId: 'add-to-cart' });
+    toast.success('Paddle added to the cart', { toastId: 'add-to-cart' });
   };
 
   return (
-    <Layout title="Home Page">
+    <Layout title="Home Page" paddles={paddles}>
       <Carousel showThumbs={false} autoPlay>
         {featuredProducts.map((product) => (
           <div key={product._id}>

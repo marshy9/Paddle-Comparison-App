@@ -40,7 +40,7 @@ export default function PaddleItem({ paddle, addToCartHandler }) {
           type="button"
           onClick={() => addToCartHandler(paddle)}
         >
-          Add to cart
+          Compare
         </button>
       </div>
     </div>

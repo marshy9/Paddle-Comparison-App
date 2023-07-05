@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { SearchIcon } from '@heroicons/react/outline';
 import CartDropdown from '../components/CartDropdown';
 
-export default function Layout({ title, children }) {
+export default function Layout({ title, children, paddles }) {
   const { status, data: session } = useSession();
   const [cartOpen, setCartOpen] = useState(false);
   const { state, dispatch } = useContext(Store);
@@ -47,7 +47,7 @@ export default function Layout({ title, children }) {
       <ToastContainer position="bottom-center" limit={1} />
 
       <div className="flex min-h-screen flex-col justify-between ">
-        <header>
+        <header className="fixed z-50 w-full bg-white">
           <nav className="flex h-12 items-center px-4 justify-between shadow-md">
             <Link href="/" className="text-lg font-bold">
               Paddle Pickers
@@ -126,7 +126,7 @@ export default function Layout({ title, children }) {
                         href="#"
                         onClick={logoutClickHandler}
                       >
-                        Logout
+                        Logouts
                       </a>
                     </Menu.Item>
                   </Menu.Items>
@@ -139,7 +139,7 @@ export default function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-4 px-4">{children}</main>
+        <main className="container m-auto mt-4 px-4 pt-10">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
           <p>Copyright © 2022 Amazona</p>
         </footer>
