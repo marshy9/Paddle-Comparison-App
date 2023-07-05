@@ -1,9 +1,23 @@
-import React from 'react';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useContext } from 'react';
 import { XIcon } from '@heroicons/react/solid';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Store } from '../utils/Store';
+import { toast } from 'react-toastify';
 
 export default function CartDropdown({ cartItems, cartOpen, setCartOpen }) {
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+
+  const removeFromCartHandler = (slug) => {
+    const updatedCartItems = cart.cartItems.filter(
+      (item) => item.slug !== slug
+    );
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: updatedCartItems });
+    toast.success('Paddle removed from the cart', {
+      toastId: 'remove-from-cart',
+    });
+  };
+
   return (
     <Fragment>
       <AnimatePresence>
@@ -16,11 +30,11 @@ export default function CartDropdown({ cartItems, cartOpen, setCartOpen }) {
             transition={{ duration: 0.3 }}
           >
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 z-50 flex justify-center items-center">
-              <div className="flex justify-end pt-4 pr-4">
+              <div className="flex justify-end pt-4 pr-4 absolute top-0 right-0">
                 <button
                   type="button"
                   className="text-gray-400 hover:text-gray-500"
-                  onClick={() => setOpen(false)}
+                  onClick={() => setCartOpen(false)}
                 >
                   <span className="sr-only">Close panel</span>
                   <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -34,7 +48,10 @@ export default function CartDropdown({ cartItems, cartOpen, setCartOpen }) {
                     </h2>
                   </div>
                   <div className="px-4 py-6 sm:px-6">
-                    <ul role="list" className="divide-y divide-gray-200">
+                    <ul
+                      role="list"
+                      className="divide-y divide-gray-200 overflow-y-auto max-h-96" // max-height of scrollbar
+                    >
                       {cartItems.map((product) => (
                         <li key={product.slug} className="flex py-6">
                           <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -62,6 +79,9 @@ export default function CartDropdown({ cartItems, cartOpen, setCartOpen }) {
                                 <button
                                   type="button"
                                   className="font-medium text-indigo-600 hover:text-indigo-500"
+                                  onClick={() =>
+                                    removeFromCartHandler(product.slug)
+                                  }
                                 >
                                   Remove
                                 </button>

@@ -25,11 +25,12 @@ function reducer(state, action) {
       return { ...state, cart: { ...state.cart, cartItems } };
     }
     case 'CART_REMOVE_ITEM': {
-      const cartItems = state.cart.cartItems.filter(
-        (item) => item.slug !== action.payload.slug
-      );
-      Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
-      return { ...state, cart: { ...state.cart, cartItems } };
+      const updatedCart = {
+        ...state.cart,
+        cartItems: action.payload,
+      };
+      Cookies.set('cart', JSON.stringify(updatedCart));
+      return { ...state, cart: updatedCart };
     }
     case 'CART_RESET':
       return {
