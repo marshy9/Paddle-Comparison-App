@@ -9,8 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Store } from '../utils/Store';
 import DropdownLink from './DropdownLink';
 import { useRouter } from 'next/router';
-import { SearchIcon } from '@heroicons/react/outline';
 import CartDropdown from '../components/CartDropdown';
+import SearchBar from '../components/SearchBar';
 
 export default function Layout({ title, children, paddles }) {
   const { status, data: session } = useSession();
@@ -18,6 +18,7 @@ export default function Layout({ title, children, paddles }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
+
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
@@ -31,8 +32,7 @@ export default function Layout({ title, children, paddles }) {
   const [query, setQuery] = useState('');
 
   const router = useRouter();
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const handleSearchSubmit = (query) => {
     router.push(`/search?query=${query}`);
   };
 
@@ -52,24 +52,7 @@ export default function Layout({ title, children, paddles }) {
             <Link href="/" className="text-lg font-bold">
               Paddle Pickers
             </Link>
-            <form
-              onSubmit={submitHandler}
-              className="mx-auto  hidden w-full justify-center md:flex"
-            >
-              <input
-                onChange={(e) => setQuery(e.target.value)}
-                type="text"
-                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
-                placeholder="Search products"
-              />
-              <button
-                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
-                type="submit"
-                id="button-addon2"
-              >
-                <SearchIcon className="h-5 w-5"></SearchIcon>
-              </button>
-            </form>
+            <SearchBar onSubmit={handleSearchSubmit} paddles={paddles} />
 
             <div>
               {/* <Link href="/cart" className="p-2">
