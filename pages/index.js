@@ -30,7 +30,11 @@ export default function Home({ paddles, featuredProducts }) {
   };
 
   return (
-    <Layout title="Home Page" paddles={paddles}>
+    <Layout
+      title="Home Page"
+      paddles={paddles}
+      addToCartHandler={addToCartHandler}
+    >
       <Carousel showThumbs={false} autoPlay>
         {featuredProducts.map((product) => (
           <div key={product._id}>

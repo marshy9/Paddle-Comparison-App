@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import CartDropdown from '../components/CartDropdown';
 import SearchBar from '../components/SearchBar';
 
-export default function Layout({ title, children, paddles }) {
+export default function Layout({ title, children, paddles, addToCartHandler }) {
   const { status, data: session } = useSession();
   const [cartOpen, setCartOpen] = useState(false);
   const { state, dispatch } = useContext(Store);
@@ -32,9 +32,6 @@ export default function Layout({ title, children, paddles }) {
   const [query, setQuery] = useState('');
 
   const router = useRouter();
-  const handleSearchSubmit = (query) => {
-    router.push(`/search?query=${query}`);
-  };
 
   return (
     <>
@@ -52,7 +49,7 @@ export default function Layout({ title, children, paddles }) {
             <Link href="/" className="text-lg font-bold">
               Paddle Pickers
             </Link>
-            <SearchBar onSubmit={handleSearchSubmit} paddles={paddles} />
+            <SearchBar paddles={paddles} addToCartHandler={addToCartHandler} />
 
             <div>
               {/* <Link href="/cart" className="p-2">
