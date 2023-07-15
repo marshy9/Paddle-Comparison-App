@@ -1,12 +1,17 @@
-import { SearchIcon, PlusCircleIcon } from '@heroicons/react/outline';
+import {
+  SearchIcon,
+  PlusCircleIcon,
+  CheckCircleIcon,
+} from '@heroicons/react/outline';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
-export default function SearchBar({ paddles }) {
+export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
   const [query, setQuery] = useState('');
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const searchRef = useRef(null);
   const router = useRouter();
+  const [selectedPaddle, setSelectedPaddle] = useState(null);
 
   const handleSearchInput = (e) => {
     const searchQuery = e.target.value.toLowerCase();
@@ -17,14 +22,31 @@ export default function SearchBar({ paddles }) {
     setQuery(searchQuery);
   };
 
-  const handleSearchSubmit = (query) => {
-    router.push(`/search?query=${query}`);
+  const handleSearchSubmit = (paddle) => {
+    router.push(`/paddle/${paddle.slug}`);
   };
 
   const handleSearchSuggestionClick = (paddle) => {
     setQuery(paddle.name);
-    handleSearchSubmit(paddle.name);
+    handleSearchSubmit(paddle);
     setSearchSuggestions([]);
+  };
+
+  const handleAddToCart = (paddle) => {
+    if (isPaddleInCart(paddle)) {
+      // Remove the paddle from the cart
+      removeFromCart(paddle);
+    } else {
+      // Add the paddle to the cart
+      setSelectedPaddle(paddle);
+      addToCartHandler(paddle);
+    }
+  };
+
+  const removeFromCart = (paddle) => {
+    // Logic to remove the paddle from the cart
+    // Implement your own cart removal logic here
+    console.log('Remove from cart:', paddle);
   };
 
   const handleClickOutside = (e) => {
@@ -41,9 +63,23 @@ export default function SearchBar({ paddles }) {
     };
   }, []);
 
+  useEffect(() => {
+    setSelectedPaddle(null);
+  }, [searchSuggestions]);
+
+  const isPaddleInCart = (paddle) => {
+    return cartItems.some((item) => item.slug === paddle.slug);
+  };
+
   return (
     <div className="relative">
-      <form onSubmit={handleSearchSubmit} className="relative w-full md:flex">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearchSubmit(selectedPaddle);
+        }}
+        className="relative w-full md:flex"
+      >
         <div ref={searchRef} className="relative flex items-center">
           <SearchIcon className="absolute left-3 h-5 w-5 text-gray-400" />
           <input
@@ -67,11 +103,16 @@ export default function SearchBar({ paddles }) {
                 <button
                   className="text-green-500"
                   onClick={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     handleAddToCart(paddle);
                   }}
                 >
-                  <PlusCircleIcon className="h-5 w-5" />
+                  {isPaddleInCart(paddle) ? (
+                    <CheckCircleIcon className="h-5 w-5" />
+                  ) : (
+                    <PlusCircleIcon className="h-5 w-5" />
+                  )}
                 </button>
               </div>
             ))}

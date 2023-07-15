@@ -22,11 +22,16 @@ export default function Home({ paddles, featuredProducts }) {
     const existItem = cart.cartItems.find((x) => x.slug === paddle.slug);
     console.log('exist:', existItem);
     if (existItem) {
-      // If the paddle already exists in the cart
-      return toast.info('Product already exists in the cart');
+      // Remove the paddle from the cart
+      dispatch({ type: 'CART_REMOVE_ITEM', payload: existItem._id });
+      toast.success('Paddle removed from the cart', {
+        toastId: 'remove-from-cart',
+      });
+    } else {
+      // Add the paddle to the cart
+      dispatch({ type: 'CART_ADD_ITEM', payload: { ...paddle } });
+      toast.success('Paddle added to the cart', { toastId: 'add-to-cart' });
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...paddle } });
-    toast.success('Paddle added to the cart', { toastId: 'add-to-cart' });
   };
 
   return (

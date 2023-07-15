@@ -49,7 +49,11 @@ export default function Layout({ title, children, paddles, addToCartHandler }) {
             <Link href="/" className="text-lg font-bold">
               Paddle Pickers
             </Link>
-            <SearchBar paddles={paddles} addToCartHandler={addToCartHandler} />
+            <SearchBar
+              paddles={paddles}
+              addToCartHandler={addToCartHandler}
+              cartItems={cart.cartItems}
+            />
 
             <div>
               {/* <Link href="/cart" className="p-2">
