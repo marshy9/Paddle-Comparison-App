@@ -17,13 +17,14 @@ export default function Home({ paddles, featuredProducts }) {
   const { cart } = state;
 
   const addToCartHandler = async (paddle) => {
-    console.log(paddle);
-    console.log(cart.cartItems);
+    //console.log('Handle paddle' + paddle);
     const existItem = cart.cartItems.find((x) => x.slug === paddle.slug);
-    console.log('exist:', existItem);
     if (existItem) {
-      // Remove the paddle from the cart
-      dispatch({ type: 'CART_REMOVE_ITEM', payload: existItem.slug });
+      const updatedCartItems = cart.cartItems.filter(
+        (item) => item.slug !== paddle.slug
+      );
+      dispatch({ type: 'CART_REMOVE_ITEM', payload: updatedCartItems });
+      console.log('remove');
       toast.success('Paddle removed from the cart', {
         toastId: 'remove-from-cart',
       });

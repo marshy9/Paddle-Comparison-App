@@ -4,19 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Store } from '../utils/Store';
 import { toast } from 'react-toastify';
 
-export default function CartDropdown({ cartItems, cartOpen, setCartOpen }) {
+export default function CartDropdown({
+  cartItems,
+  cartOpen,
+  setCartOpen,
+  addToCartHandler,
+}) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-
-  const removeFromCartHandler = (slug) => {
-    const updatedCartItems = cart.cartItems.filter(
-      (item) => item.slug !== slug
-    );
-    dispatch({ type: 'CART_REMOVE_ITEM', payload: updatedCartItems });
-    toast.success('Paddle removed from the cart', {
-      toastId: 'remove-from-cart',
-    });
-  };
 
   return (
     <Fragment>
@@ -79,9 +74,7 @@ export default function CartDropdown({ cartItems, cartOpen, setCartOpen }) {
                                 <button
                                   type="button"
                                   className="font-medium text-indigo-600 hover:text-indigo-500"
-                                  onClick={() =>
-                                    removeFromCartHandler(product.slug)
-                                  }
+                                  onClick={() => addToCartHandler(product)}
                                 >
                                   Remove
                                 </button>

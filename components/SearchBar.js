@@ -26,12 +26,6 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
     router.push(`/paddle/${paddle.slug}`);
   };
 
-  const handleSearchSuggestionClick = (paddle) => {
-    setQuery(paddle.name);
-    handleSearchSubmit(paddle);
-    setSearchSuggestions([]);
-  };
-
   const handleAddToCart = (paddle) => {
     setSelectedPaddle(paddle);
     addToCartHandler(paddle);
@@ -62,6 +56,7 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
   }, [searchSuggestions]);
 
   const isPaddleInCart = (paddle) => {
+    console.log('cartItems', cartItems);
     return cartItems.some((item) => item.slug === paddle.slug);
   };
 
@@ -91,7 +86,7 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
               <div
                 key={paddle.id}
                 className="flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSearchSuggestionClick(paddle)}
+                onClick={() => handleSearchSubmit(paddle)}
               >
                 <div>{paddle.name}</div>
                 <button

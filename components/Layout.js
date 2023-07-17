@@ -71,6 +71,7 @@ export default function Layout({ title, children, paddles, addToCartHandler }) {
                 cartItems={cart.cartItems}
                 cartOpen={cartOpen}
                 setCartOpen={setCartOpen}
+                addToCartHandler={addToCartHandler}
               />
 
               {status === 'loading' ? (
