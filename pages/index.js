@@ -23,7 +23,7 @@ export default function Home({ paddles, featuredProducts }) {
     console.log('exist:', existItem);
     if (existItem) {
       // Remove the paddle from the cart
-      dispatch({ type: 'CART_REMOVE_ITEM', payload: existItem._id });
+      dispatch({ type: 'CART_REMOVE_ITEM', payload: existItem.slug });
       toast.success('Paddle removed from the cart', {
         toastId: 'remove-from-cart',
       });

@@ -33,14 +33,8 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
   };
 
   const handleAddToCart = (paddle) => {
-    if (isPaddleInCart(paddle)) {
-      // Remove the paddle from the cart
-      removeFromCart(paddle);
-    } else {
-      // Add the paddle to the cart
-      setSelectedPaddle(paddle);
-      addToCartHandler(paddle);
-    }
+    setSelectedPaddle(paddle);
+    addToCartHandler(paddle);
   };
 
   const removeFromCart = (paddle) => {
