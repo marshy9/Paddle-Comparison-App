@@ -1,8 +1,5 @@
-import {
-  SearchIcon,
-  PlusCircleIcon,
-  CheckCircleIcon,
-} from '@heroicons/react/outline';
+import { SearchIcon, PlusCircleIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon } from '@heroicons/react/solid';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
@@ -23,7 +20,7 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
   };
 
   const handleSearchSubmit = (paddle) => {
-    router.push(`/paddle/${paddle.slug}`);
+    router.push(`/compare/${paddle.slug}`);
   };
 
   const handleAddToCart = (paddle) => {
