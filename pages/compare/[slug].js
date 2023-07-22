@@ -41,46 +41,44 @@ export default function PaddleScreen({ paddle }) {
     // Rest of the code
   };
 
+  // Fix code to display the carousel
+
   return (
     <Layout title={paddle.name}>
       <div className="py-2">
         <Link href="/">back to paddles</Link>
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
-        {/* Rest of the component code */}
-        {/* ... */}
-        <div>
-          <div className="card p-5">
-            {/* Carousel for the first two paddles in the cart */}
-            {cartPaddles.length > 0 && (
-              <div className="carousel">
-                <button className="carousel-prev" onClick={handlePrev}>
-                  &lt;
-                </button>
-                <div className="carousel-images">
-                  {cartPaddles.map((item, index) => (
-                    <div
-                      key={item.slug}
-                      className={`carousel-item ${
-                        index === currentIndex ? 'active' : ''
-                      }`}
-                    >
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={320}
-                        height={320}
-                        layout="responsive"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <button className="carousel-next" onClick={handleNext}>
-                  &gt;
-                </button>
+        <div className="card p-5">
+          {/* Carousel for the first two paddles in the cart */}
+          {cartPaddles.length > 0 && (
+            <div className="carousel">
+              <button className="carousel-prev" onClick={handlePrev}>
+                &lt;
+              </button>
+              <div className="carousel-images">
+                {cartPaddles.map((item, index) => (
+                  <div
+                    key={item.slug}
+                    className={`carousel-item ${
+                      index === currentIndex ? 'active' : ''
+                    }`}
+                  >
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={320}
+                      height={320}
+                      layout="responsive"
+                    />
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
+              <button className="carousel-next" onClick={handleNext}>
+                &gt;
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </Layout>
