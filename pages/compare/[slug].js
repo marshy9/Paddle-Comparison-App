@@ -8,78 +8,54 @@ import Layout from '../../components/Layout';
 import db from '../../utils/db';
 import { Store } from '../../utils/Store';
 
-// Custom carousel hook
-function useCarousel(items) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + items.length) % items.length
-    );
-  };
-
-  return {
-    currentIndex,
-    handleNext,
-    handlePrev,
-  };
-}
-
 export default function PaddleScreen({ paddle }) {
   const { state, dispatch } = useContext(Store);
-  const router = useRouter();
-  const cartPaddles = state.cart.cartItems.slice(0, 2);
-
-  // Use the custom carousel hook
-  const { currentIndex, handleNext, handlePrev } = useCarousel(cartPaddles);
+  const cartPaddles = state.cart.cartItems.slice(); // get full cart array
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const addToCartHandler = async () => {
     // Rest of the code
   };
 
-  // Fix code to display the carousel
+  if (!paddle) {
+    return <Layout title="Paddle Not Found">Paddle Not Found</Layout>;
+  }
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex + 2 < cartPaddles.length ? prevIndex + 2 : 0
+    );
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex - 2 < 0 ? cartPaddles.length - 2 : prevIndex - 2
+    );
+  };
+
+  // Add fixed width and height classes
+  const boxStyles = 'w-64 h-64 flex';
 
   return (
-    <Layout title={paddle.name}>
-      <div className="py-2">
-        <Link href="/">back to paddles</Link>
-      </div>
-      <div className="grid md:grid-cols-4 md:gap-3">
-        <div className="card p-5">
-          {/* Carousel for the first two paddles in the cart */}
-          {cartPaddles.length > 0 && (
-            <div className="carousel">
-              <button className="carousel-prev" onClick={handlePrev}>
-                &lt;
-              </button>
-              <div className="carousel-images">
-                {cartPaddles.map((item, index) => (
-                  <div
-                    key={item.slug}
-                    className={`carousel-item ${
-                      index === currentIndex ? 'active' : ''
-                    }`}
-                  >
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={320}
-                      height={320}
-                      layout="responsive"
-                    />
-                  </div>
-                ))}
+    <Layout>
+      <div className="flex">
+        <button onClick={handlePrev}>&lt;</button>
+
+        <div className="flex space-x-4">
+          {cartPaddles.slice(currentIndex, currentIndex + 2).map((item) => (
+            <div key={item.slug} className="w-1/2 relative">
+              <div className={boxStyles}>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  objectFit="contain"
+                />
               </div>
-              <button className="carousel-next" onClick={handleNext}>
-                &gt;
-              </button>
             </div>
-          )}
+          ))}
         </div>
+        <button onClick={handleNext}>&gt;</button>
       </div>
     </Layout>
   );
