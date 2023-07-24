@@ -22,15 +22,15 @@ export default function PaddleScreen({ paddle }) {
   }
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 2 < cartPaddles.length ? prevIndex + 2 : 0
-    );
+    if (currentIndex < cartPaddles.length - 2) {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex - 2 < 0 ? cartPaddles.length - 2 : prevIndex - 2
-    );
+    if (currentIndex > 0) {
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+    }
   };
 
   // Add fixed width and height classes
