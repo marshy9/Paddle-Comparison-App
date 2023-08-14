@@ -7,32 +7,17 @@ import Paddle from '../../models/Paddle';
 import Layout from '../../components/Layout';
 import db from '../../utils/db';
 import { Store } from '../../utils/Store';
-import { Carousel } from 'react-responsive-carousel';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Pagination } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
 
 export default function PaddleScreen({ paddle }) {
   const { state, dispatch } = useContext(Store);
   const cartPaddles = state.cart.cartItems.slice(); // get full cart array
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const addToCartHandler = async () => {
-    // Rest of the code
-  };
-
-  if (!paddle) {
-    return <Layout title="Paddle Not Found">Paddle Not Found</Layout>;
-  }
-
-  const handleNext = () => {
-    if (currentIndex < cartPaddles.length - 2) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-    }
-  };
 
   // Add fixed width and height classes
   const boxStyles = 'w-64 h-64 flex';
@@ -40,29 +25,24 @@ export default function PaddleScreen({ paddle }) {
 
   return (
     <Layout>
-      <div className="flex items-center">
-        {/* <button className="z-10" onClick={handlePrev}>
-          &lt;
-        </button> */}
-
-        <Carousel showArrows={true}>
-          {cartPaddles.map((paddle) => (
-            <div key={paddle.id}>
-              <Image
-                src={paddle.image}
-                alt={paddle.name}
-                fill
-                objectFit="contain"
-              />
-              test
+      <Swiper
+        slidesPerView={3}
+        spaceBetween={30}
+        freeMode={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[FreeMode, Pagination]}
+        className="mySwiper"
+      >
+        {cartPaddles.map((paddle) => (
+          <SwiperSlide key={paddle.id}>
+            <div className={boxStyles}>
+              <Image src={paddle.image} width={500} height={500} />
             </div>
-          ))}
-        </Carousel>
-
-        {/* <button className="z-10" onClick={handleNext}>
-          &gt;
-        </button> */}
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Layout>
   );
 }
