@@ -7,7 +7,7 @@ import Paddle from '../../models/Paddle';
 import Layout from '../../components/Layout';
 import db from '../../utils/db';
 import { Store } from '../../utils/Store';
-import { motion } from 'framer-motion';
+import { Carousel } from 'react-responsive-carousel';
 
 export default function PaddleScreen({ paddle }) {
   const { state, dispatch } = useContext(Store);
@@ -36,43 +36,32 @@ export default function PaddleScreen({ paddle }) {
 
   // Add fixed width and height classes
   const boxStyles = 'w-64 h-64 flex';
+  const paddleWidth = 'w-1/3';
 
   return (
     <Layout>
       <div className="flex items-center">
-        <button onClick={handlePrev}>&lt;</button>
-        {/* <motion.div
-          className="flex space-x-4"
-          initial={{ x: 0 }}
-          animate={{ x: `-${currentIndex * 50}%` }}
-          transition={{ duration: 0.5 }}
-        > */}
-        {/* {cartPaddles.slice(currentIndex, currentIndex + 2).map((item) => ( */}
+        {/* <button className="z-10" onClick={handlePrev}>
+          &lt;
+        </button> */}
 
-        <div className="w-1/2 relative">
-          <div className={boxStyles}>
-            <Image
-              src={cartPaddles[currentIndex].image}
-              alt={cartPaddles[currentIndex].name}
-              fill
-              objectFit="contain"
-            />
-          </div>
-        </div>
-        <div className="w-1/2 relative">
-          {cartPaddles[currentIndex + 1] ? (
-            <div className={boxStyles}>
+        <Carousel showArrows={true}>
+          {cartPaddles.map((paddle) => (
+            <div key={paddle.id}>
               <Image
-                src={cartPaddles[currentIndex + 1].image}
-                alt={cartPaddles[currentIndex + 1].name}
+                src={paddle.image}
+                alt={paddle.name}
                 fill
                 objectFit="contain"
               />
+              test
             </div>
-          ) : null}
-        </div>
+          ))}
+        </Carousel>
 
-        <button onClick={handleNext}>&gt;</button>
+        {/* <button className="z-10" onClick={handleNext}>
+          &gt;
+        </button> */}
       </div>
     </Layout>
   );
