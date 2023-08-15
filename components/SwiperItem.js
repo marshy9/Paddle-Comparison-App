@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-export default function PaddleItem({ paddle, addToCartHandler }) {
+export default function SwiperItem({ paddle }) {
   return (
     <div className="card">
       <div className="relative">
@@ -26,11 +26,7 @@ export default function PaddleItem({ paddle, addToCartHandler }) {
         </Link>
         <p className="mb-2">{paddle.brand}</p>
         <p>${paddle.price}</p>
-        <button
-          className="primary-button"
-          type="button"
-          onClick={() => addToCartHandler(paddle)}
-        >
+        <button className="primary-button" type="button">
           Select
         </button>
       </div>
