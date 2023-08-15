@@ -9,6 +9,7 @@ import db from '../../utils/db';
 import { Store } from '../../utils/Store';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
+import SwiperItem from '../../components/SwiperItem';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -20,13 +21,14 @@ export default function PaddleScreen({ paddle }) {
   const cartPaddles = state.cart.cartItems.slice(); // get full cart array
 
   // Add fixed width and height classes
-  const boxStyles = 'w-64 h-64 flex';
+  const boxStyles = 'w-64 h-64 ';
   const paddleWidth = 'w-1/3';
 
   return (
     <Layout>
       <Swiper
-        slidesPerView={3}
+        autoHeight={false}
+        slidesPerView={3.5}
         spaceBetween={30}
         freeMode={true}
         pagination={{
@@ -37,9 +39,7 @@ export default function PaddleScreen({ paddle }) {
       >
         {cartPaddles.map((paddle) => (
           <SwiperSlide key={paddle.id}>
-            <div className={boxStyles}>
-              <Image src={paddle.image} width={500} height={500} />
-            </div>
+            <SwiperItem paddle={paddle} key={paddle.slug}></SwiperItem>
           </SwiperSlide>
         ))}
       </Swiper>
