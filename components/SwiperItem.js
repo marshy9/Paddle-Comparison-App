@@ -26,9 +26,6 @@ export default function SwiperItem({ paddle }) {
         </Link>
         <p className="mb-2">{paddle.brand}</p>
         <p>${paddle.price}</p>
-        <button className="primary-button" type="button">
-          Select
-        </button>
       </div>
     </div>
   );
