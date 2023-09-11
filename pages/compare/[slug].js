@@ -18,6 +18,9 @@ import 'swiper/css/pagination';
 // Import radar charts
 import {
   Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
   RadialLinearScale,
   PointElement,
   LineElement,
@@ -26,9 +29,13 @@ import {
   Legend,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(
-  RadialLinearScale,
+  CategoryScale, //bar chart
+  LinearScale,
+  BarElement,
+  RadialLinearScale, //radar chart
   PointElement,
   LineElement,
   Filler,
@@ -39,24 +46,38 @@ ChartJS.register(
 export default function PaddleScreen({ paddle }) {
   const { state, dispatch } = useContext(Store);
   const cartPaddles = state.cart.cartItems.slice(); // get full cart array
+  const colors = ['red', 'blue', 'green', 'orange', 'purple', 'black'];
 
-  const data = {
+  const radar_data = {
     labels: ['Price', 'RPM', 'Swing Weight'],
 
-    datasets: cartPaddles.map((paddle) => ({
+    datasets: cartPaddles.map((paddle, index) => ({
       label: paddle.name,
       data: [paddle.price, paddle.rpm, paddle.swingWeight],
-      backgroundColor: 'rgba(255, 99, 132, 0.2)', // color
+      backgroundColor: colors[index % colors.length], // color will default back to 1st index if runs over buffer
+    })),
+  };
+
+  var bar_data = {
+    labels: ['Price', 'RPM', 'Swing Weight'],
+    datasets: cartPaddles.map((paddle, index) => ({
+      label: paddle.name,
+      data: [paddle.price, paddle.rpm, paddle.swingWeight], // color
+      backgroundColor: colors[index % colors.length],
     })),
   };
 
   const items = [
     {
       title: 'Radar Chart',
-      content: <Radar data={data} />,
+      content: <Radar data={radar_data} />,
     },
     {
-      title: 'Tab 2',
+      title: 'Bar Chart',
+      content: <Bar data={bar_data} />,
+    },
+    {
+      title: 'Extra',
       content: (
         <div className="border-2 border-blue-400 rounded-lg p-4">
           <h1 className="text-3xl text-blue-600">Title Test 2</h1>
