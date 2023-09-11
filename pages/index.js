@@ -37,7 +37,7 @@ export default function Home({ paddles, featuredProducts }) {
 
   return (
     <Layout
-      title="Home Page"
+      title="Pickleball Paddle Comparison"
       paddles={paddles}
       addToCartHandler={addToCartHandler}
     >
