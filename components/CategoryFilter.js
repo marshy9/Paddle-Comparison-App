@@ -14,14 +14,15 @@
 */
 import { Fragment, useState } from 'react';
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/outline';
 import {
   ChevronDownIcon,
   FunnelIcon,
+  MenuAlt1Icon,
   MinusIcon,
   PlusIcon,
   Squares2X2Icon,
-} from '@heroicons/react/20/solid';
+} from '@heroicons/react/solid';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -79,7 +80,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
+export default function CategoryFilter() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   return (
@@ -267,6 +268,7 @@ export default function Example() {
               >
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
+                {/* <MenuAlt1Icon className="h-5 w-5" aria-hidden="true" /> */}
               </button>
               <button
                 type="button"

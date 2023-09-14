@@ -11,6 +11,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
 import PaddleItem from '../components/PaddleItem';
+import CategoryFilter from '../components/CategoryFilter';
 
 export default function Home({ paddles, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
@@ -52,6 +53,7 @@ export default function Home({ paddles, featuredProducts }) {
       </Carousel>
 
       <h2 className="h2 my-4">Latest Paddles</h2>
+      <CategoryFilter></CategoryFilter>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {paddles.map((paddle) => (
           <PaddleItem
