@@ -1,5 +1,8 @@
-import { SearchIcon, PlusCircleIcon } from '@heroicons/react/outline';
-import { CheckCircleIcon } from '@heroicons/react/solid';
+import {
+  MagnifyingGlassIcon,
+  PlusCircleIcon,
+} from '@heroicons/react/24/outline';
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
@@ -67,7 +70,7 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
         className="relative w-full md:flex"
       >
         <div ref={searchRef} className="relative flex items-center">
-          <SearchIcon className="absolute left-3 h-5 w-5 text-gray-400" />
+          <MagnifyingGlassIcon className="absolute left-3 h-5 w-5 text-gray-400" />
           <input
             onChange={handleSearchInput}
             value={query}

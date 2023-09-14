@@ -14,7 +14,7 @@
 */
 import { Fragment, useState } from 'react';
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import {
   ChevronDownIcon,
   FunnelIcon,
@@ -22,7 +22,7 @@ import {
   MinusIcon,
   PlusIcon,
   Squares2X2Icon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/24/solid';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },

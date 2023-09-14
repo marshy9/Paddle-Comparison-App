@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import React from 'react';
-import { ArrowRightIcon, PlusCircleIcon } from '@heroicons/react/outline';
+import { ArrowRightIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 
 export default function PaddleItem({ paddle, addToCartHandler }) {
   return (

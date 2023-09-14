@@ -1,5 +1,5 @@
 import { Fragment, useState, useContext } from 'react';
-import { XIcon } from '@heroicons/react/solid';
+import { XIcon } from '@heroicons/react/24/solid';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Store } from '../utils/Store';
 import { toast } from 'react-toastify';
