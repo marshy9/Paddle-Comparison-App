@@ -14,8 +14,13 @@ import PaddleItem from '../components/PaddleItem';
 import CategoryFilter from '../components/CategoryFilter';
 
 export default function Home({ paddles, featuredProducts }) {
+  //cart states
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
+  //filter states
+  const [filters, setFilters] = useState({});
+  const [filteredPaddles, setFilteredPaddles] = useState(paddles);
+
 
   const addToCartHandler = async (paddle) => {
     //console.log('Handle paddle' + paddle);
@@ -36,6 +41,16 @@ export default function Home({ paddles, featuredProducts }) {
     }
   };
 
+  const filterPaddles = useCallback(() => {
+    // filter paddles based on filters object
+    const filtered = paddles.filter(...) 
+    setFilteredPaddles(filtered);
+  }, [filters, paddles])
+
+  useEffect(() => {
+    filterPaddles();
+  }, [filters, filterPaddles])
+
   return (
     <Layout
       title="Pickleball Paddle Comparison"
@@ -52,17 +67,17 @@ export default function Home({ paddles, featuredProducts }) {
         ))}
       </Carousel>
 
-      <h2 className="h2 my-4">Latest Paddles</h2>
-      <CategoryFilter></CategoryFilter>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {paddles.map((paddle) => (
-          <PaddleItem
-            paddle={paddle}
-            key={paddle.slug}
-            addToCartHandler={addToCartHandler}
-          ></PaddleItem>
-        ))}
-      </div>
+      <CategoryFilter onFilter={setFilters}>
+        <div className="col-span-3 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {filteredPaddles.map((paddle) => (
+            <PaddleItem
+              paddle={paddle}
+              key={paddle.slug}
+              addToCartHandler={addToCartHandler}
+            ></PaddleItem>
+          ))}
+        </div>
+      </CategoryFilter>
     </Layout>
   );
 }

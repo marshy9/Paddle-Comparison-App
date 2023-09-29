@@ -1,5 +1,5 @@
 import { Fragment, useState, useContext } from 'react';
-import { XIcon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Store } from '../utils/Store';
 import { toast } from 'react-toastify';
@@ -32,7 +32,7 @@ export default function CartDropdown({
                   onClick={() => setCartOpen(false)}
                 >
                   <span className="sr-only">Close panel</span>
-                  <XIcon className="h-6 w-6" aria-hidden="true" />
+                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
               <div className="flex justify-center items-center h-screen">

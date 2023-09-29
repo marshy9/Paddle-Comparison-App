@@ -32,6 +32,7 @@ const paddleSchema = new mongoose.Schema(
       required: false,
     },
     airVent: { type: Boolean, default: false },
+    elongatedHandle: { type: Boolean, default: false },
     youtubeLink: [{ type: String, required: false }],
     purchaseLink: { type: String, required: false },
     description: { type: String, required: true },

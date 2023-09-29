@@ -32,46 +32,39 @@ const sortOptions = [
   { name: 'Price: High to Low', href: '#', current: false },
 ];
 const subCategories = [
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
+  { name: 'Raw Carbon', href: '#' },
+  { name: 'Elongated Handle', href: '#' },
   { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
 ];
 const filters = [
   {
-    id: 'color',
-    name: 'Color',
+    id: 'brand',
+    name: 'Brand',
     options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
+      { value: 'selkirk', label: 'Selkirk', checked: false },
+      { value: 'legacy', label: 'Legacy', checked: false },
+      { value: 'adidas', label: 'Adidas', checked: false },
     ],
   },
   {
-    id: 'category',
-    name: 'Category',
+    id: 'shape',
+    name: 'Shape',
     options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
+      { value: 'Standard', label: 'Standard', checked: false },
+      { value: 'Elongated', label: 'Elongated', checked: false },
+      { value: 'Blade', label: 'Blade', checked: false },
+      { value: 'Teardrop', label: 'Teardrop', checked: false },
+      { value: 'Widebody', label: 'Widebody', checked: false },
     ],
   },
   {
-    id: 'size',
-    name: 'Size',
+    id: 'thickness',
+    name: 'Core Thickness',
     options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
+      { value: 'thin', label: 'Thin (0mm - 12mm)', checked: false },
+      { value: 'standard', label: 'Standard (12.1mm - 14mm)', checked: false },
+      { value: 'thick', label: 'Thick (14.1mm - 16mm)', checked: false },
+      { value: 'oversized', label: 'Oversized (< 16.1mm)', checked: false },
     ],
   },
 ];
@@ -80,8 +73,20 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function CategoryFilter() {
+export default function CategoryFilter({ children, onFiltersChange }) {
+  //open and close filters
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  //send filter state
+  const [filters, setFilters] = useState({});
+
+  const handleChange = (e) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [e.target.name]: e.target.value,
+    }));
+
+    onFiltersChange(filters);
+  };
 
   return (
     <div className="bg-white">
@@ -210,10 +215,10 @@ export default function CategoryFilter() {
           </Dialog>
         </Transition.Root>
 
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              New Arrivals
+              Latest Paddles
             </h1>
 
             <div className="flex items-center">
@@ -361,7 +366,15 @@ export default function CategoryFilter() {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3">{/* Your content */}</div>
+              <div className="lg:col-span-3 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                {filteredPaddles.map((paddle) => (
+                  <PaddleItem
+                    paddle={paddle}
+                    key={paddle.slug}
+                    addToCartHandler={addToCartHandler}
+                  ></PaddleItem>
+                ))}
+              </div>
             </div>
           </section>
         </main>
