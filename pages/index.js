@@ -1,8 +1,6 @@
-import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
-import ProductItem from '../components/ProductItem';
 import Product from '../models/Product';
 import Paddle from '../models/Paddle';
 import db from '../utils/db';
@@ -10,17 +8,12 @@ import { Store } from '../utils/Store';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
-import PaddleItem from '../components/PaddleItem';
 import CategoryFilter from '../components/CategoryFilter';
 
 export default function Home({ paddles, featuredProducts }) {
   //cart states
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  //filter states
-  const [filters, setFilters] = useState({});
-  const [filteredPaddles, setFilteredPaddles] = useState(paddles);
-
 
   const addToCartHandler = async (paddle) => {
     //console.log('Handle paddle' + paddle);
@@ -41,16 +34,6 @@ export default function Home({ paddles, featuredProducts }) {
     }
   };
 
-  const filterPaddles = useCallback(() => {
-    // filter paddles based on filters object
-    const filtered = paddles.filter(...) 
-    setFilteredPaddles(filtered);
-  }, [filters, paddles])
-
-  useEffect(() => {
-    filterPaddles();
-  }, [filters, filterPaddles])
-
   return (
     <Layout
       title="Pickleball Paddle Comparison"
@@ -67,17 +50,10 @@ export default function Home({ paddles, featuredProducts }) {
         ))}
       </Carousel>
 
-      <CategoryFilter onFilter={setFilters}>
-        <div className="col-span-3 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {filteredPaddles.map((paddle) => (
-            <PaddleItem
-              paddle={paddle}
-              key={paddle.slug}
-              addToCartHandler={addToCartHandler}
-            ></PaddleItem>
-          ))}
-        </div>
-      </CategoryFilter>
+      <CategoryFilter
+        paddles={paddles}
+        addToCartHandler={addToCartHandler}
+      ></CategoryFilter>
     </Layout>
   );
 }

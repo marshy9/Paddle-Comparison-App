@@ -12,8 +12,9 @@
   }
   ```
 */
-import { Fragment, useState } from 'react';
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react';
+import { Fragment, useState, useEffect } from 'react';
+import PaddleItem from './PaddleItem';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import {
   ChevronDownIcon,
@@ -73,21 +74,57 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function CategoryFilter({ children, onFiltersChange }) {
+export default function CategoryFilter({ paddles, addToCartHandler }) {
   //open and close filters
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  //send filter state
-  const [filters, setFilters] = useState({});
+  //filter paddle arrary
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [filteredPaddles, setFilteredPaddles] = useState(paddles);
 
-  const handleChange = (e) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [e.target.name]: e.target.value,
-    }));
+  // Function to apply filters and update the filteredPaddles state
+  const applyFilters = () => {
+    let filteredPaddles = [...paddles];
+    console.log('Applying filter');
+    console.log(filteredPaddles);
+    console.log('Applying filter');
+    console.log(selectedFilters);
 
-    onFiltersChange(filters);
+    // Loop through the selected filters and apply them to the paddles
+    for (const filter in selectedFilters) {
+      if (selectedFilters[filter].length > 0) {
+        if (filter === 'brand') {
+          filteredPaddles = filteredPaddles.filter((paddle) =>
+            selectedFilters[filter].includes(paddle.brand)
+          );
+        } else {
+          // Handle other filter types similarly if needed
+        }
+      }
+    }
+    console.log('Final filter');
+    console.log(filteredPaddles);
+    setFilteredPaddles(filteredPaddles);
   };
 
+  // Handle filter changes
+  useEffect(() => {
+    applyFilters();
+  }, [selectedFilters, paddles]);
+
+  // Function to handle checkbox change for filters
+  const handleFilterChange = (filterType, value) => {
+    console.log('Handling Change');
+    console.log(filteredPaddles);
+
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: prevFilters[filterType]?.includes(value)
+        ? prevFilters[filterType].filter((v) => v !== value)
+        : [...(prevFilters[filterType] || []), value],
+    }));
+  };
+
+  // Render the filtered paddles
   return (
     <div className="bg-white">
       <div>
@@ -189,9 +226,19 @@ export default function CategoryFilter({ children, onFiltersChange }) {
                                     <input
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
-                                      defaultValue={option.value}
+                                      value={option.value}
                                       type="checkbox"
-                                      defaultChecked={option.checked}
+                                      checked={
+                                        selectedFilters[section.id]?.includes(
+                                          option.value
+                                        ) || false
+                                      }
+                                      onChange={() =>
+                                        handleFilterChange(
+                                          section.id,
+                                          option.value
+                                        )
+                                      }
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <label
@@ -346,7 +393,14 @@ export default function CategoryFilter({ children, onFiltersChange }) {
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
                                   type="checkbox"
-                                  defaultChecked={option.checked}
+                                  checked={
+                                    selectedFilters[section.id]?.includes(
+                                      option.value
+                                    ) || false
+                                  }
+                                  onChange={() =>
+                                    handleFilterChange(section.id, option.value)
+                                  }
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
