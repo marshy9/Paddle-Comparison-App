@@ -98,9 +98,9 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
                   }}
                 >
                   {isPaddleInCart(paddle) ? (
-                    <CheckCircleIcon className="h-5 w-5" />
+                    <CheckCircleIcon className="h-5 w-5 text-blue-900" />
                   ) : (
-                    <PlusCircleIcon className="h-5 w-5" />
+                    <PlusCircleIcon className="h-5 w-5 text-blue-800" />
                   )}
                 </button>
               </div>

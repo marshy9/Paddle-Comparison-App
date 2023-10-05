@@ -26,11 +26,11 @@ import {
 } from '@heroicons/react/24/solid';
 
 const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
+  //{ name: 'Most Popular', href: '#', current: true },
+  //{ name: 'Best Rating', href: '#', current: false },
+  //{ name: 'Newest', href: '#', current: false },
+  { name: 'Price: Low to High', current: false },
+  { name: 'Price: High to Low', current: false },
 ];
 const subCategories = [
   { name: 'Raw Carbon', href: '#' },
@@ -44,7 +44,7 @@ const filters = [
     options: [
       { value: 'selkirk', label: 'Selkirk', checked: false },
       { value: 'legacy', label: 'Legacy', checked: false },
-      { value: 'adidas', label: 'Adidas', checked: false },
+      { value: 'Adidas', label: 'Adidas', checked: false },
     ],
   },
   {
@@ -80,19 +80,23 @@ export default function CategoryFilter({ paddles, addToCartHandler }) {
   //filter paddle arrary
   const [selectedFilters, setSelectedFilters] = useState({});
   const [filteredPaddles, setFilteredPaddles] = useState(paddles);
+  // State to track the selected sorting option
+  const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
 
   // Function to apply filters and update the filteredPaddles state
   const applyFilters = () => {
     let filteredPaddles = [...paddles];
     console.log('Applying filter');
     console.log(filteredPaddles);
-    console.log('Applying filter');
+    console.log('List of filters');
     console.log(selectedFilters);
 
     // Loop through the selected filters and apply them to the paddles
     for (const filter in selectedFilters) {
       if (selectedFilters[filter].length > 0) {
         if (filter === 'brand') {
+          console.log('xxx');
+          console.log(selectedFilters[filter]);
           filteredPaddles = filteredPaddles.filter((paddle) =>
             selectedFilters[filter].includes(paddle.brand)
           );
@@ -113,15 +117,27 @@ export default function CategoryFilter({ paddles, addToCartHandler }) {
 
   // Function to handle checkbox change for filters
   const handleFilterChange = (filterType, value) => {
-    console.log('Handling Change');
-    console.log(filteredPaddles);
-
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
       [filterType]: prevFilters[filterType]?.includes(value)
         ? prevFilters[filterType].filter((v) => v !== value)
         : [...(prevFilters[filterType] || []), value],
     }));
+  };
+
+  // Function to handle sorting change
+  const handleSortChange = (sortOption) => {
+    setSelectedSortOption(sortOption);
+    if (sortOption.name === 'Price: Low to High') {
+      // Sort the paddles by price low to high
+      setFilteredPaddles(
+        [...filteredPaddles].sort((a, b) => a.price - b.price)
+      );
+    } else if (sortOption.name === 'Price: High to Low') {
+      setFilteredPaddles(
+        [...filteredPaddles].sort((a, b) => b.price - a.price)
+      );
+    }
   };
 
   // Render the filtered paddles
@@ -303,6 +319,7 @@ export default function CategoryFilter({ paddles, addToCartHandler }) {
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm'
                               )}
+                              onClick={() => handleSortChange(option)} // Call the handleSortChange function
                             >
                               {option.name}
                             </a>
@@ -420,7 +437,7 @@ export default function CategoryFilter({ paddles, addToCartHandler }) {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+              <div className="lg:col-span-3 grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-4">
                 {filteredPaddles.map((paddle) => (
                   <PaddleItem
                     paddle={paddle}
