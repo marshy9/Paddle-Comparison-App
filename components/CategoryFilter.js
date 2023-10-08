@@ -37,44 +37,29 @@ const subCategories = [
   { name: 'Elongated Handle', href: '#' },
   { name: 'Travel Bags', href: '#' },
 ];
-const filters = [
-  {
-    id: 'brand',
-    name: 'Brand',
-    options: [
-      { value: 'selkirk', label: 'Selkirk', checked: false },
-      { value: 'legacy', label: 'Legacy', checked: false },
-      { value: 'Adidas', label: 'Adidas', checked: false },
-    ],
-  },
-  {
-    id: 'shape',
-    name: 'Shape',
-    options: [
-      { value: 'Standard', label: 'Standard', checked: false },
-      { value: 'Elongated', label: 'Elongated', checked: false },
-      { value: 'Blade', label: 'Blade', checked: false },
-      { value: 'Teardrop', label: 'Teardrop', checked: false },
-      { value: 'Widebody', label: 'Widebody', checked: false },
-    ],
-  },
-  {
-    id: 'thickness',
-    name: 'Core Thickness',
-    options: [
-      { value: 'thin', label: 'Thin (0mm - 12mm)', checked: false },
-      { value: 'standard', label: 'Standard (12.1mm - 14mm)', checked: false },
-      { value: 'thick', label: 'Thick (14.1mm - 16mm)', checked: false },
-      { value: 'oversized', label: 'Oversized (< 16.1mm)', checked: false },
-    ],
-  },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function CategoryFilter({ paddles, addToCartHandler }) {
+// Function to extract unique brand values from paddles
+const extractUniqueBrands = (paddles) => {
+  const brandsSet = new Set();
+  paddles.forEach((paddle) => {
+    brandsSet.add(paddle.brand);
+  });
+  return Array.from(brandsSet).map((brand) => ({
+    value: brand,
+    label: brand,
+    checked: false,
+  }));
+};
+
+export default function CategoryFilter({
+  paddles,
+  addToCartHandler,
+  cartItems,
+}) {
   //open and close filters
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   //filter paddle arrary
@@ -82,6 +67,39 @@ export default function CategoryFilter({ paddles, addToCartHandler }) {
   const [filteredPaddles, setFilteredPaddles] = useState(paddles);
   // State to track the selected sorting option
   const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
+
+  const filters = [
+    {
+      id: 'brand',
+      name: 'Brand',
+      options: extractUniqueBrands(paddles), // Populate brand options dynamically
+    },
+    {
+      id: 'shape',
+      name: 'Shape',
+      options: [
+        { value: 'Standard', label: 'Standard', checked: false },
+        { value: 'Elongated', label: 'Elongated', checked: false },
+        { value: 'Blade', label: 'Blade', checked: false },
+        { value: 'Teardrop', label: 'Teardrop', checked: false },
+        { value: 'Widebody', label: 'Widebody', checked: false },
+      ],
+    },
+    {
+      id: 'thickness',
+      name: 'Core Thickness',
+      options: [
+        { value: 'thin', label: 'Thin (0mm - 12mm)', checked: false },
+        {
+          value: 'standard',
+          label: 'Standard (12.1mm - 14mm)',
+          checked: false,
+        },
+        { value: 'thick', label: 'Thick (14.1mm - 16mm)', checked: false },
+        { value: 'oversized', label: 'Oversized (< 16.1mm)', checked: false },
+      ],
+    },
+  ];
 
   // Function to apply filters and update the filteredPaddles state
   const applyFilters = () => {
@@ -443,6 +461,7 @@ export default function CategoryFilter({ paddles, addToCartHandler }) {
                     paddle={paddle}
                     key={paddle.slug}
                     addToCartHandler={addToCartHandler}
+                    cartItems={cartItems}
                   ></PaddleItem>
                 ))}
               </div>

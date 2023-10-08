@@ -53,6 +53,7 @@ export default function Home({ paddles, featuredProducts }) {
       <CategoryFilter
         paddles={paddles}
         addToCartHandler={addToCartHandler}
+        cartItems={cart.cartItems}
       ></CategoryFilter>
     </Layout>
   );
