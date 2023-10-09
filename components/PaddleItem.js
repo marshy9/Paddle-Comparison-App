@@ -5,8 +5,6 @@ import { ArrowRightIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 
 export default function PaddleItem({ paddle, addToCartHandler, cartItems }) {
   const isPaddleInCart = (paddle) => {
-    console.log('XXX');
-    console.log('cartItems', cartItems);
     return cartItems.some((item) => item.slug === paddle.slug);
   };
 
