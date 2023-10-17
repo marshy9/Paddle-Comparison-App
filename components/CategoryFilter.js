@@ -24,6 +24,7 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from '@heroicons/react/24/solid';
+import Slider from '@mui/material/Slider';
 
 const sortOptions = [
   //{ name: 'Most Popular', href: '#', current: true },
@@ -100,10 +101,6 @@ export default function CategoryFilter({
         { value: 'thick', label: 'Thick (14.1mm - 16mm)', checked: false },
         { value: 'oversized', label: 'Oversized (< 16.1mm)', checked: false },
       ],
-    },
-    {
-      id: 'price',
-      name: 'Price',
     },
   ];
 
@@ -227,18 +224,45 @@ export default function CategoryFilter({
                         </li>
                       ))}
                     </ul>
-
-                    {filters.map((section) => {
-                      if (section.id === 'price') {
-                        return (
-                          <div>
+                    {/* Price Slider Section */}
+                    <Disclosure
+                      as="div"
+                      key="price"
+                      className="border-t border-gray-200 px-4 py-6"
+                    >
+                      {({ open }) => (
+                        <>
+                          <h3 className="-mx-2 -my-3 flow-root">
+                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                              <span className="font-medium text-gray-900">
+                                Price
+                              </span>
+                              <span className="ml-6 flex items-center">
+                                {open ? (
+                                  <MinusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <PlusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </span>
+                            </Disclosure.Button>
+                          </h3>
+                          <Disclosure.Panel className="pt-6">
                             <Slider
                               value={priceRange}
                               onChange={setPriceRange}
                             />
-                          </div>
-                        );
-                      }
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                    {/* Filters Section */}
+                    {filters.map((section) => {
                       return (
                         <Disclosure
                           as="div"
@@ -405,7 +429,42 @@ export default function CategoryFilter({
                     </li>
                   ))}
                 </ul>
+                {/* Price Slider Section */}
+                <Disclosure
+                  as="div"
+                  key="price"
+                  className="border-b border-gray-200 py-6"
+                >
+                  {({ open }) => (
+                    <>
+                      <h3 className="-my-3 flow-root">
+                        <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                          <span className="font-medium text-gray-900">
+                            Price
+                          </span>
+                          <span className="ml-6 flex items-center">
+                            {open ? (
+                              <MinusIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            ) : (
+                              <PlusIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            )}
+                          </span>
+                        </Disclosure.Button>
+                      </h3>
+                      <Disclosure.Panel className="pt-6">
+                        <Slider value={priceRange} onChange={setPriceRange} />
+                      </Disclosure.Panel>
+                    </>
+                  )}
+                </Disclosure>
 
+                {/* Filters Section */}
                 {filters.map((section) => (
                   <Disclosure
                     as="div"
@@ -436,7 +495,7 @@ export default function CategoryFilter({
                         </h3>
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
+                            {section.options?.map((option, optionIdx) => (
                               <div
                                 key={option.value}
                                 className="flex items-center"
