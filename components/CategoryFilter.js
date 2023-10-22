@@ -69,7 +69,8 @@ export default function CategoryFilter({
   // State to track the selected sorting option
   const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
   //slider price range
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRange, setPriceRange] = useState([0, 300]);
+  const minDistance = 10;
 
   const filters = [
     {
@@ -112,6 +113,11 @@ export default function CategoryFilter({
     console.log('List of filters');
     console.log(selectedFilters);
 
+    // Apply price filter
+    filteredPaddles = filteredPaddles.filter((paddle) => {
+      const price = paddle.price;
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
     // Loop through the selected filters and apply them to the paddles
     for (const filter in selectedFilters) {
       if (selectedFilters[filter].length > 0) {
@@ -121,7 +127,14 @@ export default function CategoryFilter({
           filteredPaddles = filteredPaddles.filter((paddle) =>
             selectedFilters[filter].includes(paddle.brand)
           );
-        } else {
+        }
+        if (filter === 'shape') {
+          filteredPaddles = filteredPaddles.filter((paddle) =>
+            selectedFilters[filter].includes(paddle.shape)
+          );
+          // Handle other filter types similarly if needed
+        }
+        if (filter === 'thickness') {
           // Handle other filter types similarly if needed
         }
       }
@@ -134,7 +147,7 @@ export default function CategoryFilter({
   // Handle filter changes
   useEffect(() => {
     applyFilters();
-  }, [selectedFilters, paddles]);
+  }, [selectedFilters, priceRange, paddles]);
 
   // Function to handle checkbox change for filters
   const handleFilterChange = (filterType, value) => {
@@ -159,6 +172,26 @@ export default function CategoryFilter({
         [...filteredPaddles].sort((a, b) => b.price - a.price)
       );
     }
+  };
+
+  // Function to handle price slider
+  const handlePriceChange = (event, newValue, activeThumb) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minDistance);
+        setPriceRange([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setPriceRange([clamped - minDistance, clamped]);
+      }
+    } else {
+      setPriceRange(newValue);
+    }
+    // Call applyFilters to apply all filters
+    applyFilters();
   };
 
   // Render the filtered paddles
@@ -224,7 +257,7 @@ export default function CategoryFilter({
                         </li>
                       ))}
                     </ul>
-                    {/* Price Slider Section */}
+                    {/* Mobile Price Slider Section */}
                     <Disclosure
                       as="div"
                       key="price"
@@ -254,8 +287,12 @@ export default function CategoryFilter({
                           </h3>
                           <Disclosure.Panel className="pt-6">
                             <Slider
+                              getAriaLabel={() => 'Minimum distance'}
                               value={priceRange}
-                              onChange={setPriceRange}
+                              max={300} // Set the maximum value
+                              onChange={handlePriceChange}
+                              valueLabelDisplay="auto"
+                              disableSwap
                             />
                           </Disclosure.Panel>
                         </>
@@ -458,7 +495,14 @@ export default function CategoryFilter({
                         </Disclosure.Button>
                       </h3>
                       <Disclosure.Panel className="pt-6">
-                        <Slider value={priceRange} onChange={setPriceRange} />
+                        <Slider
+                          getAriaLabel={() => 'Minimum distance'}
+                          value={priceRange}
+                          max={300} // Set the maximum value
+                          onChange={handlePriceChange}
+                          valueLabelDisplay="auto"
+                          disableSwap
+                        />
                       </Disclosure.Panel>
                     </>
                   )}

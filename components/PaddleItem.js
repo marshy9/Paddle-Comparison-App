@@ -25,11 +25,15 @@ export default function PaddleItem({ paddle, addToCartHandler, cartItems }) {
         </Link>
         <p className="mb-2">{paddle.brand}</p>
         <button
-          className={`relative inline-flex items-center justify-start px-6 py-3 overflow-hidden font-medium transition-all rounded group ${
-            isPaddleInCart(paddle)
-              ? 'text-black bg-yellow-500'
-              : 'text-white bg-black'
-          }`}
+          className={`
+            relative inline-flex items-center justify-start px-6 py-3 overflow-hidden font-medium 
+            transition-all rounded group border-2 border-black hover:scale-105 transform
+            ${
+              isPaddleInCart(paddle)
+                ? 'text-black bg-white'
+                : 'text-white bg-black'
+            } 
+          `}
           type="button"
           onClick={() => addToCartHandler(paddle)}
         >

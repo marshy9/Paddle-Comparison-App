@@ -44,11 +44,12 @@ export default function Layout({ title, children, paddles, addToCartHandler }) {
       <ToastContainer position="bottom-center" limit={1} />
 
       <div className="flex min-h-screen flex-col justify-between ">
-        <header className="fixed z-50 w-full bg-white">
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md">
-            <Link href="/" className="text-lg font-bold">
-              Paddle Pickers
+        <header className="fixed z-40 w-full bg-grey">
+          <nav className="flex h-12 items-center px-2 lg:px-4 justify-between shadow-md">
+            <Link href="/" className="text-2xl font-bold mr-4 sm:text-4xl">
+              PADDLE PICKS
             </Link>
+
             <SearchBar
               paddles={paddles}
               addToCartHandler={addToCartHandler}
@@ -73,7 +74,7 @@ export default function Layout({ title, children, paddles, addToCartHandler }) {
                 setCartOpen={setCartOpen}
                 addToCartHandler={addToCartHandler}
               />
-
+              {/* 
               {status === 'loading' ? (
                 'Loading'
               ) : session?.user ? (
@@ -120,7 +121,7 @@ export default function Layout({ title, children, paddles, addToCartHandler }) {
                 <Link href="/login" className="p-2">
                   Login
                 </Link>
-              )}
+              )} */}
             </div>
           </nav>
         </header>
