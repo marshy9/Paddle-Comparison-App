@@ -1,5 +1,5 @@
 import { Fragment, useState, useContext } from 'react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Store } from '../utils/Store';
 import { toast } from 'react-toastify';
@@ -18,17 +18,18 @@ export default function CartDropdown({
       <AnimatePresence>
         {cartOpen && (
           <motion.div
-            className="fixed inset-0 bg-gray-500 bg-opacity-75 z-50 flex justify-center items-center"
-            initial={{ opacity: 0, translateY: '-100%' }}
-            animate={{ opacity: 1, translateY: '0%' }}
-            exit={{ opacity: 0, translateY: '-100%' }}
+            className="fixed inset-y-0 right-0 w-80 bg-white bg-opacity-60 z-30 shadow-lg"
+            style={{ top: '3rem' }}
+            initial={{ opacity: 0, translateX: '100%' }}
+            animate={{ opacity: 1, translateX: '0%' }}
+            exit={{ opacity: 0, translateX: '100%' }}
             transition={{ duration: 0.3 }}
           >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 z-50 flex justify-center items-center">
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-20 z-30 flex justify-center items-center">
               <div className="flex justify-end pt-4 pr-4 absolute top-0 right-0">
                 <button
                   type="button"
-                  className="text-gray-400 hover:text-gray-500"
+                  className="text-gray-700 hover:text-gray-500"
                   onClick={() => setCartOpen(false)}
                 >
                   <span className="sr-only">Close panel</span>
@@ -47,42 +48,64 @@ export default function CartDropdown({
                       role="list"
                       className="divide-y divide-gray-200 overflow-y-auto max-h-96" // max-height of scrollbar
                     >
-                      {cartItems.map((product) => (
-                        <li key={product.slug} className="flex py-6">
+                      {cartItems.length === 0 ? (
+                        <li className="flex py-6">
                           <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                            <img
-                              src={product.image}
-                              className="h-full w-full object-cover object-center"
-                            />
+                            <ShoppingCartIcon className="h-full w-full text-gray-500" />
                           </div>
                           <div className="ml-4 flex flex-1 flex-col">
                             <div>
                               <div className="flex justify-between text-base font-medium text-gray-900">
-                                <h3>
-                                  <a href={`/paddle/${product.slug}`}>
-                                    {product.name}
-                                  </a>
-                                </h3>
+                                <h3>Empty Cart</h3>
                               </div>
                               <p className="mt-1 text-sm text-gray-500">
-                                {product.brand}
+                                Add paddles by clicking 'Add to Comparison'
+                                Button or Search.
                               </p>
-                            </div>
-                            <div className="flex flex-1 items-end justify-between text-sm">
-                              <p className="text-gray-500"> {product.price}</p>
-                              <div className="flex">
-                                <button
-                                  type="button"
-                                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                                  onClick={() => addToCartHandler(product)}
-                                >
-                                  Remove
-                                </button>
-                              </div>
                             </div>
                           </div>
                         </li>
-                      ))}
+                      ) : (
+                        cartItems.map((product) => (
+                          <li key={product.slug} className="flex py-6">
+                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                              <img
+                                src={product.image}
+                                className="h-full w-full object-cover object-center"
+                              />
+                            </div>
+                            <div className="ml-4 flex flex-1 flex-col">
+                              <div>
+                                <div className="flex justify-between text-base font-medium text-gray-900">
+                                  <h3>
+                                    <a href={`/paddle/${product.slug}`}>
+                                      {product.name}
+                                    </a>
+                                  </h3>
+                                </div>
+                                <p className="mt-1 text-sm text-gray-500">
+                                  {product.brand}
+                                </p>
+                              </div>
+                              <div className="flex flex-1 items-end justify-between text-sm">
+                                <p className="text-gray-500">
+                                  {' '}
+                                  {product.price}
+                                </p>
+                                <div className="flex">
+                                  <button
+                                    type="button"
+                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                    onClick={() => addToCartHandler(product)}
+                                  >
+                                    Remove
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        ))
+                      )}
                     </ul>
                   </div>
                   <div className="px-4 py-6 sm:px-6 border-t border-gray-200">

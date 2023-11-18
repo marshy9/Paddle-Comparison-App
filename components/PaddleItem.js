@@ -30,8 +30,8 @@ export default function PaddleItem({ paddle, addToCartHandler, cartItems }) {
             transition-all rounded group border-2 border-black hover:scale-105 transform
             ${
               isPaddleInCart(paddle)
-                ? 'text-black bg-white'
-                : 'text-white bg-black'
+                ? 'text-black bg-blue-100'
+                : 'text-white bg-gradient-to-t from-gray-700 via-gray-900 to-black'
             } 
           `}
           type="button"

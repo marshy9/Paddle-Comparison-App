@@ -11,17 +11,13 @@ import DropdownLink from './DropdownLink';
 import { useRouter } from 'next/router';
 import CartDropdown from '../components/CartDropdown';
 import SearchBar from '../components/SearchBar';
+import { ShoppingCartIcon } from '@heroicons/react/24/solid';
 
 export default function Layout({ title, children, paddles, addToCartHandler }) {
   const { status, data: session } = useSession();
   const [cartOpen, setCartOpen] = useState(false);
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  const [cartItemsCount, setCartItemsCount] = useState(0);
-
-  useEffect(() => {
-    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
-  }, [cart.cartItems]);
 
   const logoutClickHandler = () => {
     Cookies.remove('cart');
@@ -43,10 +39,13 @@ export default function Layout({ title, children, paddles, addToCartHandler }) {
 
       <ToastContainer position="bottom-center" limit={1} />
 
-      <div className="flex min-h-screen flex-col justify-between ">
-        <header className="fixed z-40 w-full bg-grey">
+      <div className="flex min-h-screen flex-col justify-between">
+        <header className="fixed z-40 w-full bg-gray-900">
           <nav className="flex h-12 items-center px-2 lg:px-4 justify-between shadow-md">
-            <Link href="/" className="text-2xl font-bold mr-4 sm:text-4xl">
+            <Link
+              href="/"
+              className="text-2xl font-bold  tracking-tighter sm:text-4xl text-white"
+            >
               PADDLE PICKS
             </Link>
 
@@ -65,8 +64,17 @@ export default function Layout({ title, children, paddles, addToCartHandler }) {
                   </span>
                 )}
               </Link> */}
-              <button type="button" onClick={() => setCartOpen(!cartOpen)}>
-                Open Cart
+              <button
+                className="text-white flex items-center lg:text-xl"
+                onClick={() => setCartOpen(!cartOpen)}
+              >
+                <ShoppingCartIcon className="h-6 w-6 mr-1" />{' '}
+                <span class="hidden md:inline">Cart</span>
+                {cart.cartItems.length > 0 && (
+                  <span className="ml-1 rounded-full bg-white px-2 py-1 text-xs font-bold text-black">
+                    {cart.cartItems.length}
+                  </span>
+                )}
               </button>
               <CartDropdown
                 cartItems={cart.cartItems}

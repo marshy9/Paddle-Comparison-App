@@ -23,14 +23,15 @@ export default function Home({ paddles, featuredProducts }) {
         (item) => item.slug !== paddle.slug
       );
       dispatch({ type: 'CART_REMOVE_ITEM', payload: updatedCartItems });
-      console.log('remove');
-      toast.success('Paddle removed from the cart', {
-        toastId: 'remove-from-cart',
-      });
+      console.log('remove paddle');
+      // toast.success('Paddle removed from the cart', {
+      //   toastId: 'remove-from-cart',
+      // });
     } else {
       // Add the paddle to the cart
       dispatch({ type: 'CART_ADD_ITEM', payload: { ...paddle } });
-      toast.success('Paddle added to the cart', { toastId: 'add-to-cart' });
+      console.log('add paddle');
+      //toast.success('Paddle added to the cart', { toastId: 'add-to-cart' });
     }
   };
 

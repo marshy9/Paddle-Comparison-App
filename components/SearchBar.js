@@ -22,8 +22,10 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
     setQuery(searchQuery);
   };
 
-  const handleSearchSubmit = (paddle) => {
-    router.push(`/compare/${paddle.slug}`);
+  const handleSearchSubmit = (cart) => {
+    const paddleSlugs = cart.map((paddle) => paddle.slug);
+    const compareUrl = `/compare/${paddleSlugs.join('-to-')}`;
+    router.push(compareUrl);
   };
 
   const handleAddToCart = (paddle) => {
@@ -61,36 +63,36 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-1/2 lg:w-1/3">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleSearchSubmit(selectedPaddle);
+          handleSearchSubmit(cartItems);
         }}
         className="relative w-full md:flex"
       >
-        <div ref={searchRef} className="relative flex items-center">
-          <MagnifyingGlassIcon className="absolute left-3 h-5 w-5 text-gray-400" />
+        <div ref={searchRef} className="relative flex items-center w-full">
+          <MagnifyingGlassIcon className="absolute left-3 h-5 w-5 text-gray-600" />
           <input
             onChange={handleSearchInput}
             value={query}
             type="text"
-            className="rounded-tr-none rounded-br-none pl-10 p-1 text-sm focus:ring-0"
+            className="w-full pl-10 p-1 text-sm focus:ring-0"
             placeholder="Search Paddles"
           />
         </div>
         {/* Search suggestions */}
         {searchSuggestions.length > 0 && (
-          <div className="absolute left-0 right-0 mt-8 max-h-58 overflow-y-auto bg-white rounded shadow-md">
+          <div className="absolute left-0 right-0 mt-1 md:mt-8 max-h-58 overflow-y-auto bg-white rounded shadow-md">
             {searchSuggestions.map((paddle) => (
               <div
                 key={paddle.id}
                 className="flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSearchSubmit(paddle)}
+                onClick={() => handleSearchSubmit(cartItems)}
               >
                 <div>{paddle.name}</div>
                 <button
-                  className="text-green-500"
+                  className="flex items-center bg-blue-100 px-2 rounded"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -98,9 +100,15 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
                   }}
                 >
                   {isPaddleInCart(paddle) ? (
-                    <CheckCircleIcon className="h-5 w-5 text-blue-900" />
+                    <>
+                      <div>Remove</div>
+                      <CheckCircleIcon className="h-5 w-5 text-gray-800 ml-1" />
+                    </>
                   ) : (
-                    <PlusCircleIcon className="h-5 w-5 text-blue-800" />
+                    <>
+                      <div>Compare</div>
+                      <PlusCircleIcon className="h-5 w-5 text-gray-800 ml-1" />
+                    </>
                   )}
                 </button>
               </div>
