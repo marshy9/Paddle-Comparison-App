@@ -3,15 +3,15 @@ import {
   PlusCircleIcon,
 } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { useSearchSubmit } from '../utils/utils';
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
 
 export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
   const [query, setQuery] = useState('');
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const searchRef = useRef(null);
-  const router = useRouter();
   const [selectedPaddle, setSelectedPaddle] = useState(null);
+  const { handleSearchSubmit } = useSearchSubmit();
 
   const handleSearchInput = (e) => {
     const searchQuery = e.target.value.toLowerCase();
@@ -20,12 +20,6 @@ export default function SearchBar({ paddles, addToCartHandler, cartItems }) {
     );
     setSearchSuggestions(suggestions);
     setQuery(searchQuery);
-  };
-
-  const handleSearchSubmit = (cart) => {
-    const paddleSlugs = cart.map((paddle) => paddle.slug);
-    const compareUrl = `/compare/${paddleSlugs.join('-to-')}`;
-    router.push(compareUrl);
   };
 
   const handleAddToCart = (paddle) => {

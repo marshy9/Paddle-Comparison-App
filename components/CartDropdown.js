@@ -2,6 +2,7 @@ import { Fragment, useState, useContext } from 'react';
 import { XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Store } from '../utils/Store';
+import { useSearchSubmit } from '../utils/utils';
 import { toast } from 'react-toastify';
 
 export default function CartDropdown({
@@ -12,6 +13,7 @@ export default function CartDropdown({
 }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
+  const { handleSearchSubmit } = useSearchSubmit();
 
   return (
     <Fragment>
@@ -117,8 +119,8 @@ export default function CartDropdown({
                     </p>
                     <div className="mt-6">
                       <a
-                        href="#"
                         className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                        onClick={() => handleSearchSubmit(cartItems)}
                       >
                         Compare
                       </a>
