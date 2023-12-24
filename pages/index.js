@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { toast } from 'react-toastify';
+import { addToCartHandler } from '../utils/utils';
 import Layout from '../components/Layout';
 import Product from '../models/Product';
 import Paddle from '../models/Paddle';
@@ -15,31 +15,15 @@ export default function Home({ paddles, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
-  const addToCartHandler = async (paddle) => {
-    //console.log('Handle paddle' + paddle);
-    const existItem = cart.cartItems.find((x) => x.slug === paddle.slug);
-    if (existItem) {
-      const updatedCartItems = cart.cartItems.filter(
-        (item) => item.slug !== paddle.slug
-      );
-      dispatch({ type: 'CART_REMOVE_ITEM', payload: updatedCartItems });
-      console.log('remove paddle');
-      // toast.success('Paddle removed from the cart', {
-      //   toastId: 'remove-from-cart',
-      // });
-    } else {
-      // Add the paddle to the cart
-      dispatch({ type: 'CART_ADD_ITEM', payload: { ...paddle } });
-      console.log('add paddle');
-      //toast.success('Paddle added to the cart', { toastId: 'add-to-cart' });
-    }
+  const handleAddToCartHome = (paddle) => {
+    addToCartHandler(dispatch, cart, paddle);
   };
 
   return (
     <Layout
-      title="Pickleball Paddle Comparison"
+      title="Compare Pickleball Paddles Home"
       paddles={paddles}
-      addToCartHandler={addToCartHandler}
+      addToCartHandler={handleAddToCartHome}
     >
       <Carousel showThumbs={false} autoPlay>
         {featuredProducts.map((product) => (
@@ -53,7 +37,7 @@ export default function Home({ paddles, featuredProducts }) {
 
       <CategoryFilter
         paddles={paddles}
-        addToCartHandler={addToCartHandler}
+        addToCartHandler={handleAddToCartHome}
         cartItems={cart.cartItems}
       ></CategoryFilter>
     </Layout>

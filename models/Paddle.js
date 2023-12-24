@@ -8,14 +8,14 @@ const paddleSchema = new mongoose.Schema(
     brand: { type: String, required: true },
     price: { type: Number, required: true },
     maxWeight: { type: Number, required: false },
-    minWeight: { type: Number, required: true }, //if no weight range exists just use minweight
+    minWeight: { type: Number, required: false }, //if no weight range exists just use minweight
     swingWeight: { type: Number, required: false },
     twistWeight: { type: Number, required: false },
     core: { type: String, required: true },
     surface: { type: String, required: true },
     length: { type: Number, required: true },
     width: { type: Number, required: true },
-    thickness: { type: Number, required: true },
+    thickness: { type: Number, required: false },
     handleLength: { type: Number, required: true },
     gripThickness: { type: Number, required: false },
     releaseDate: { type: Date, min: '2000-01-01', required: false },

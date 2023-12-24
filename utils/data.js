@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs';
 
+//seed with localhost:3000/api/seed
+
 const data = {
   users: [
     {
@@ -160,6 +162,10 @@ const data = {
       gripSize: 4.125,
       rpmCategory: 'Low',
       description: 'This is a test entry (delete later)',
+      youtubeLink: [
+        'https://www.youtube.com/watch?v=H_mRBGQ1pQ4',
+        'https://www.youtube.com/watch?v=gTZuA3uW7Rw',
+      ],
     },
     {
       name: 'Adipower Dummy2',
@@ -176,6 +182,10 @@ const data = {
       gripSize: 4.125,
       rpmCategory: 'Low',
       description: 'This is a test entry (delete later)',
+      youtubeLink: [
+        'https://www.youtube.com/watch?v=Jj8Z4QqaqnQ',
+        'https://www.youtube.com/watch?v=i7Y5ETyvbE0',
+      ],
     },
     {
       name: 'Adipower Dummy3',

@@ -11,8 +11,6 @@ export default function CartDropdown({
   setCartOpen,
   addToCartHandler,
 }) {
-  const { state, dispatch } = useContext(Store);
-  const { cart } = state;
   const { handleSearchSubmit } = useSearchSubmit();
 
   return (

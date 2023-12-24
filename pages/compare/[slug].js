@@ -1,8 +1,5 @@
 import React, { useContext, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
+import { addToCartHandler, useSearchSubmit } from '../../utils/utils';
 import Paddle from '../../models/Paddle';
 import Layout from '../../components/Layout';
 import db from '../../utils/db';
@@ -10,6 +7,7 @@ import { Store } from '../../utils/Store';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
 import TabsBar from '../../components/TabsBar';
+import { useRouter } from 'next/router';
 import SwiperItem from '../../components/SwiperItem';
 // Import Swiper styles
 import 'swiper/css';
@@ -43,17 +41,19 @@ ChartJS.register(
   Legend
 );
 
-export default function PaddleScreen({ paddle }) {
+export default function PaddleScreen({ paddles }) {
   const { state, dispatch } = useContext(Store);
+  const { cart } = state;
   const cartPaddles = state.cart.cartItems.slice(); // get full cart array
   const colors = ['red', 'blue', 'green', 'orange', 'purple', 'black'];
+  const { handleSearchSubmit } = useSearchSubmit();
 
   const radar_data = {
-    labels: ['Price', 'RPM', 'Swing Weight'],
+    labels: ['Price', 'RPM', 'Swing Weight', 'Twist Weight', 'Handle Length'],
 
     datasets: cartPaddles.map((paddle, index) => ({
       label: paddle.name,
-      data: [paddle.price, paddle.rpm, paddle.swingWeight],
+      data: [paddle.price, paddle.rpm, paddle.swingWeight, paddle.twistWeight],
       backgroundColor: colors[index % colors.length], // color will default back to 1st index if runs over buffer
     })),
   };
@@ -91,12 +91,17 @@ export default function PaddleScreen({ paddle }) {
     },
   ];
 
-  // Add fixed width and height classes
-  const boxStyles = 'w-64 h-64 ';
-  const paddleWidth = 'w-1/3';
+  const handleAddToCart = (paddle) => {
+    addToCartHandler(dispatch, cart, paddle);
+    handleSearchSubmit(cartPaddles);
+  };
 
   return (
-    <Layout>
+    <Layout
+      title="Pickleball Paddle Comparison - Specs and Reviews"
+      paddles={paddles}
+      addToCartHandler={handleAddToCart}
+    >
       <Swiper
         autoHeight={false}
         slidesPerView={3.5}
@@ -119,16 +124,12 @@ export default function PaddleScreen({ paddle }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const { slug } = params;
-
+export async function getServerSideProps() {
   await db.connect();
-  const paddle = await Paddle.findOne({ slug }).lean();
-  await db.disconnect();
+  const paddles = await Paddle.find().lean();
   return {
     props: {
-      paddle: paddle ? db.convertDocToObj(paddle) : null,
+      paddles: paddles.map(db.convertDocToObj),
     },
   };
 }

@@ -11,3 +11,15 @@ export const useSearchSubmit = () => {
 
   return { handleSearchSubmit };
 };
+
+export const addToCartHandler = (dispatch, cart, paddle) => {
+  const existItem = cart.cartItems.find((x) => x.slug === paddle.slug);
+  if (existItem) {
+    const updatedCartItems = cart.cartItems.filter(
+      (item) => item.slug !== paddle.slug
+    );
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: updatedCartItems });
+  } else {
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...paddle } });
+  }
+};
