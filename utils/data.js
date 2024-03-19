@@ -97,21 +97,33 @@ const data = {
   ],
   paddles: [
     {
-      name: 'Legacy Pro',
-      slug: 'legacy-pro',
-      image: '/images/legacy.png',
-      brand: 'Legacy Pickleball',
-      price: 145,
-      weight: 8,
-      core: 'Thermoformed foam Sealed Edges',
-      surface: 'Toray t700 Raw Carbon Fiber',
+      name: 'Perseus',
+      image: '/images/joolaperseus14.jpg',
+      slug: 'perseus-14mm',
+      brand: 'Joola',
+      price: 249.95,
+      //maxWeight: ,
+      //minWeight: ,
+      weight: 7.8,
+      swingWeight: 120,
+      twistWeight: 5.77,
+      core: 'Polypropylene',
+      surface: 'Carbon Flex5',
       length: 16.5,
       width: 7.5,
-      handleLength: 5.3,
-      gripSize: 4.125,
-      rpmCategory: 'High',
-      description:
-        'The Legacy Pro is unmatched in its balance between spin and power. A true versatile paddle that can reset the ball and apply power to those shots that require a little more oomph. The Toray t700 carbon fiber face mixed with the special layering combine to make this paddle stand out amongst the rest. The core has been modified to help reduce vibration for those players looking to stay away from pesky arm injuries. Designed specifically to be well balanced fresh out of the package. We have engineered the Legacy Pro to withstand lots of stress at the handle. The thermoforming seal with foam takes the stability of the paddle to new heights in the Pickleball Industry.',
+      thickness: 14,
+      handleLength: 5.5, //sort by elongated handle
+      gripThickness: 4.125,
+      // releaseDate: '2000-01-01', //sort by newest
+      //rpm: , //sort by rpm
+      rpmCategory: 'High', // ['Low', 'Med', 'High'],
+      shape: 'Elongated', // ['Elongated', 'Standard', 'Blade', 'Teardrop', 'Widebody']
+      playType: 'Power',
+      edgeFoam: true,
+      airVent: false,
+      elongatedHandle: false,
+      purchaseLink:
+        'https://joolausa.com/ben-johns-perseus-cfs-14-pickleball-paddle/',
     },
     {
       name: 'GX6 Power Series ',
@@ -133,7 +145,7 @@ const data = {
     {
       name: 'CRBN 2X Power Series',
       slug: 'crbn-2x-power-series',
-      image: '/images/crbn2-power-14mm',
+      image: '/images/crbn2-power-14mm.jpg',
       brand: 'CRBN',
       price: 229.99,
       weight: 8,
@@ -150,7 +162,7 @@ const data = {
     {
       name: 'Adipower Dummy1',
       slug: 'adipower-dummy1',
-      image: '/images/adidas-adipower-attk',
+      image: '/images/adidas-adipower-attk.jpg',
       brand: 'Adidas',
       price: 69.69,
       weight: 6.9,
@@ -170,7 +182,7 @@ const data = {
     {
       name: 'Adipower Dummy2',
       slug: 'adipower-dummy2',
-      image: '/images/adidas-adipower-attk',
+      image: '/images/legacy.png',
       brand: 'Adidas',
       price: 69.69,
       weight: 6.9,
@@ -190,7 +202,7 @@ const data = {
     {
       name: 'Adipower Dummy3',
       slug: 'adipower-dummy3',
-      image: '/images/adidas-adipower-attk',
+      image: '/images/head_gravitysh.jpg',
       brand: 'Adidas',
       price: 69.69,
       weight: 6.9,
@@ -206,7 +218,7 @@ const data = {
     {
       name: 'Adipower Dummy4',
       slug: 'adipower-dummy4',
-      image: '/images/adidas-adipower-attk',
+      image: '/images/slk-halo.jpg',
       brand: 'Adidas',
       price: 69.69,
       weight: 6.9,
@@ -218,6 +230,21 @@ const data = {
       gripSize: 4.125,
       rpmCategory: 'Low',
       description: 'This is a test entry (delete later)',
+    },
+    {
+      name: 'Double Black Diamond Control',
+      slug: 'double-black-diamond-control',
+      image: '/images/dbd-control.jpg',
+      brand: 'Six Zero',
+      price: 180,
+      weight: 7.6,
+      core: 'Polypropylene',
+      surface: 'Carbon Fiber',
+      length: 16.3,
+      width: 7.6,
+      handleLength: 4.75,
+      gripSize: 4.125,
+      rpmCategory: 'High',
     },
   ],
 };
